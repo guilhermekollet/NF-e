@@ -1,7 +1,7 @@
 #include <iostream>
-#include "Cnpj.hpp"
-#include "Endereco.hpp"
-#include "Empresa.hpp"
+#include "dependencies/Cnpj.hpp"
+#include "dependencies/Endereco.hpp"
+#include "dependencies/Empresa.hpp"
 
 using namespace std;
 
