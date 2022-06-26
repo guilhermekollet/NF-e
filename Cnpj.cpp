@@ -10,6 +10,26 @@ Cnpj::Cnpj()
 
 }
 
+Cnpj::Cnpj(string cnpj)
+{
+
+  if(ehValido(cnpj))
+  {
+
+    define(cnpj);
+
+  }
+  else
+  {
+
+    raiz = "00000000";
+    filial = "0000";
+    dv = "00";
+    
+  }
+
+}
+
 Cnpj::~Cnpj()
 {
     

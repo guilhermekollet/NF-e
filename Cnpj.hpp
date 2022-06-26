@@ -18,6 +18,7 @@ class Cnpj
     //Methods
     public:
     Cnpj();
+    Cnpj(string cnpj);
     ~Cnpj();
     static bool ehValido(string cnpj);
     bool define(string cnpj);

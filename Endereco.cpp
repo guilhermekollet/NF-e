@@ -13,6 +13,19 @@ Endereco::Endereco()
 
 }
 
+Endereco::Endereco(string logradouro, string numero, string complemento, string bairro, string cidade, string uf, string cep)
+{
+
+    this->logradouro = logradouro;
+    this->numero = numero;
+    this->complemento = complemento;
+    this->bairro = bairro;
+    this->cidade = cidade;
+    this->uf = uf;
+    this->cep = cep;
+
+}
+
 Endereco::~Endereco()
 {
     
@@ -136,41 +149,41 @@ string Endereco::str() const
 return ss.str();
 }
 
-bool Endereco::operator==(const Endereco &e) const
+bool Endereco::operator==(const Endereco &endereco) const
 {
     
     string _this = logradouro + numero + complemento + bairro + cidade + uf + cep;
-    string obj = e.logradouro + e.numero + e.complemento + e.bairro + e.cidade + e.uf + e.cep;
+    string obj = endereco.logradouro + endereco.numero + endereco.complemento + endereco.bairro + endereco.cidade + endereco.uf + endereco.cep;
   
     if(_this == obj) return true;
   
 return false;
 }
 
-istream &operator>>(istream& in,Endereco &e)
+istream &operator>>(istream& in,Endereco &endereco)
 {
 
-  getline(in, e.logradouro);
-  getline(in, e.numero);
-  getline(in, e.complemento);
-  getline(in, e.bairro);
-  getline(in, e.cidade);
-  getline(in, e.uf);
-  getline(in, e.cep);
+  getline(in, endereco.logradouro);
+  getline(in, endereco.numero);
+  getline(in, endereco.complemento);
+  getline(in, endereco.bairro);
+  getline(in, endereco.cidade);
+  getline(in, endereco.uf);
+  getline(in, endereco.cep);
 
 return in;
 }
 
-ostream &operator<<(ostream& out,const Endereco &e)
+ostream &operator<<(ostream& out,const Endereco &endereco)
 {
 
-  out << e.logradouro << endl;
-  out << e.numero << endl;
-  out << e.complemento << endl;
-  out << e.bairro << endl;
-  out << e.cidade << endl;
-  out << e.uf << endl;
-  out << e.cep;
+  out << endereco.logradouro << endl;
+  out << endereco.numero << endl;
+  out << endereco.complemento << endl;
+  out << endereco.bairro << endl;
+  out << endereco.cidade << endl;
+  out << endereco.uf << endl;
+  out << endereco.cep;
 
 return out;
 }

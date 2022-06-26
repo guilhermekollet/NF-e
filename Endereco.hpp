@@ -22,6 +22,7 @@ class Endereco
     //Methods
     public:
     Endereco();
+    Endereco(string logradouro, string numero, string complemento, string bairro, string cidade, string uf, string cep);
     ~Endereco();
     string obtemLogradouro() const;
     bool defineLogradouro(string logradouro);
@@ -34,15 +35,15 @@ class Endereco
     string obtemCidade() const;
     bool defineCidade(string cidade);
     string obtemUF() const;
-    bool defineUF(string uf);
+    bool defineUF(string UF);
     string obtemCEP() const;
     bool defineCEP(string CEP);
     string str() const;
     bool fromCSV(string csv, string separador=";"); //lê CSV
     string toCSV(string separador=";"); //converte para CSV
-    bool operator==(const Endereco &e) const;
-    friend istream &operator>>(istream& in,Endereco &e);
-    friend ostream &operator<<(ostream& out,const Endereco &e);
+    bool operator==(const Endereco &endereco) const;
+    friend istream &operator>>(istream& in,Endereco &endereco);
+    friend ostream &operator<<(ostream& out,const Endereco &endereco);
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Cnpj.hpp"
 #include "Endereco.hpp"
+#include "Empresa.hpp"
 
 using namespace std;
 
@@ -36,6 +37,7 @@ bool executaCnpj()
 
 return true;
 }
+
 bool executaEndereco()
 {
     Endereco Test;
@@ -74,6 +76,44 @@ bool executaEndereco()
 return true;
 }
 
+bool executaEmpresa()
+{
+
+    Empresa Test;
+    Cnpj CnpjTest("44.786.289/0001-91");
+    Endereco EnderecoTest();
+    Endereco EnderecoTest2("Rua da Esperanca","608","Casa","Noiva do Mar","Xangri-La","RS","95888-000");
+
+    cout << "Testando: defineNome(""OBIN FARM & TECHNOLOGIES"") --> " << Test.defineNome("OBIN FARM & TECHNOLOGIES") << endl;
+    cout << "Testando: obtemNome() --> " << Test.obtemNome() << endl;
+    cout << "Testando: defineCNPJ(CnpjTest) --> " << Test.defineCNPJ(CnpjTest) << endl;
+    cout << "Testando: obtemCNPJ() --> " << Test.obtemCNPJ() << endl;
+    cout << "Testando: defineInscEst(""388.108.598.269"") --> " << Test.defineInscEst("388.108.598.269") << endl;
+    cout << "Testando: obtemInscEst() --> " << Test.obtemInscEst() << endl;
+    cout << "Testando: defineEndereco(EnderecoTest2) --> " << Test.defineEndereco(EnderecoTest2) << endl;
+    cout << "Testando: obtemEndereco() --> " << Test.obtemEndereco() << endl;
+    cout << "Testando: defineTelefone() --> " << Test.defineTelefone("51 995774400") << endl;
+    cout << "Testando: obtemTelefone() --> " << Test.obtemTelefone() << endl;
+
+    cout << endl;
+
+    cout << "Testando: str() --> " << Test.str() << endl;
+
+    cout << endl;
+
+    cout << "Testando: bool operator==(Test) --> " << (Test == Test ? "1" : "0") << endl;
+    
+    stringstream ss("Nome\n44.786.289/0001-91\n321.321.321\nLogradouro\nNumero\nComplemento\nBairro\nCidade\nUF\nCEP\n51 985172499");
+    ss >> Test;
+    cout << "Testando: istream &operator>>(istream& in,Empresa &e) --> " << Test.str() << endl;
+
+    stringstream ss2;
+	ss2 << Test;
+    cout << "Testando: ostream &operator<<(ostream& out,const Empresa &e) --> " << ss2.str() << endl;
+
+return true;
+}
+
 bool start()
 {
     cout << "Started..." << endl;
@@ -85,9 +125,12 @@ bool start()
     cout << "Starting executaEndereco()..." << endl;
     executaEndereco();
     cout << "executaEndereco() terminated." << endl << endl;
-    
 
-    return true;
+    cout << "Starting executaEmpresa()..." << endl;
+    executaEmpresa();
+    cout << "executaEmpresa() terminated." << endl << endl;
+
+return true;
 }
 
 int main() 
