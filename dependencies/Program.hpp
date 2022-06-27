@@ -24,5 +24,6 @@ class Program
     string obtemEmpresa();
     string obtemProdutos();
     string obtemRelatorio();
+    string obtemCumpomFiscal();
 
 };

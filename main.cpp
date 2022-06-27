@@ -141,7 +141,6 @@ return true;
 
 bool start()
 {
-    cout << "Started..." << endl;
 
     //executaCnpj();
     //executaEndereco();

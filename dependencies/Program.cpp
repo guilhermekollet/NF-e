@@ -37,7 +37,7 @@ void Program::menu_Carregamento(string urlEmpresa, string urlProdutos)
                 system("clear||cls");
                 loadFile_Empresa(urlEmpresa);
                 loadFile_Produtos(urlProdutos);
-                cout << empresa.obtemNome() << " Logado | " << produtos.obtemNumProdutos() << " produtos cadastrados."<< endl << endl;
+                cout << empresa.obtemNome() << " - Logado | " << produtos.obtemNumProdutos() << " produtos cadastrados."<< endl << endl;
 
             loop = false;
             break;
@@ -110,7 +110,8 @@ void Program::menu_Interface()
         int value;
 
         cout << "1) Gerar Relatorio" << endl;
-        cout << "2) Sair" << endl;
+        cout << "2) Iniciar Venda" << endl;
+        cout << "3) Sair" << endl;
 
         cout << endl;
 
@@ -127,6 +128,12 @@ void Program::menu_Interface()
             break;
             
             case 2:
+                cout << obtemCumpomFiscal() << endl;
+                exit(1);
+            
+            break;
+
+            case 3:
                 system("clear||cls");
                 exit(1);
             
@@ -236,6 +243,38 @@ string Program::obtemRelatorio()
     ss << endl << setw(108) << setfill('=') << "";
 
     ss << endl << produtos.str();
+
+return ss.str();
+}
+
+string Program::obtemCumpomFiscal()
+{
+
+    stringstream ss;
+    ss << setiosflags(ios::left) << setw (3) << setfill(' ') << "I.";
+    ss << "  ";
+
+    ss << setiosflags(ios::left) << setw (14) << setfill(' ') << "CODIGO";
+    ss << "  ";
+
+    ss << setiosflags(ios::left) << setw (42) << setfill (' ') << "DESCRICAO";
+    ss << "  ";
+
+    ss << setiosflags(ios::right) << setw (6) << setfill (' ') << "R$ UN";
+    ss << "  ";
+
+    ss << setiosflags(ios::right) << setw (6) << setfill (' ') << "QTD";
+    ss << "  ";
+
+    ss << setiosflags(ios::right) << setw(8) << setfill(' ') << "DESCONTO";
+    ss << "  ";
+
+    ss << setiosflags(ios::left) << setw(7) << setfill(' ') << "VAL(R$)";
+    ss << "  ";
+        
+    ss << endl << setw(111) << setfill('=') << "";
+
+    //ss << endl << produtos.str();
 
 return ss.str();
 }

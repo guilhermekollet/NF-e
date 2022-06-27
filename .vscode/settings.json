@@ -7,6 +7,8 @@
         "sstream": "cpp",
         "*.tcc": "cpp",
         "array": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "iomanip": "cpp",
+        "xiosbase": "cpp"
     }
 }
