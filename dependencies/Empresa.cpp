@@ -122,6 +122,40 @@ string Empresa::str() const
 return ss.str();
 }
 
+bool Empresa::fromCSV(string csv, char separador)
+{
+
+    if(csv != "")
+    {
+
+        string cnpj;
+        string endereco;
+        string telefone;
+
+        string aux;
+        stringstream buffer(csv);
+        stringstream stream;
+
+        getline(buffer, this->nome, separador);
+        getline(buffer, cnpj, separador);
+        getline(buffer, this->inscEst, separador);
+        getline(buffer, endereco, separador);
+        getline(buffer, this->telefone, separador);   
+  
+        this->cnpj.define(cnpj);
+        this->endereco.fromCSV(endereco, ':');
+
+    return true;
+    }
+
+return false;
+}
+
+string Empresa::toCSV(char separador)
+{
+
+}
+
 bool Empresa::operator==(const Empresa &empresa) const
 {
 

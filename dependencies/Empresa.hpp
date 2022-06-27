@@ -20,7 +20,7 @@ class Empresa
 
     //Methods
     public:
-    Empresa(string nome="");
+    Empresa(string nome = "");
     ~Empresa();
     string obtemNome() const;
     bool defineNome(string nome);
@@ -33,8 +33,8 @@ class Empresa
     string obtemTelefone() const;
     bool defineTelefone(string telefone);
     string str() const;
-	bool fromCSV(string csv, string separador=";"); //lê CSV
-	string toCSV(string separador=";"); //converte para CSV
+	bool fromCSV(string csv, char separador = ';'); //lê CSV
+	string toCSV(char separador = ';'); //converte para CSV
     bool operator==(const Empresa &empresa) const;
     friend istream &operator>>(istream& in,Empresa &empresa);
     friend ostream &operator<<(ostream& out,const Empresa &empresa);

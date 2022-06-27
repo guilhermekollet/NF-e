@@ -39,8 +39,8 @@ class Endereco
     string obtemCEP() const;
     bool defineCEP(string CEP);
     string str() const;
-    bool fromCSV(string csv, string separador=";"); //lê CSV
-    string toCSV(string separador=";"); //converte para CSV
+	bool fromCSV(string csv, char separador = ';'); //lê CSV
+	string toCSV(char separador = ';'); //converte para CSV
     bool operator==(const Endereco &endereco) const;
     friend istream &operator>>(istream& in,Endereco &endereco);
     friend ostream &operator<<(ostream& out,const Endereco &endereco);

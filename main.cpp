@@ -2,11 +2,13 @@
 #include "dependencies/Cnpj.hpp"
 #include "dependencies/Endereco.hpp"
 #include "dependencies/Empresa.hpp"
+#include "dependencies/Program.hpp"
 
 using namespace std;
 
 bool executaCnpj()
 {
+    cout << "Starting executaCnpj()..." << endl;
 
     Cnpj Test;
     Cnpj Test2;
@@ -35,11 +37,16 @@ bool executaCnpj()
 	ss2 << Test2;
     cout << "Testando: operator<<(ostream& out,const Cnpj& cnpj) --> " << ss2.str() << endl;
 
+    cout << "executaCnpj() terminated." << endl << endl;
+
 return true;
 }
 
 bool executaEndereco()
 {
+
+    cout << "Starting executaEndereco()..." << endl;
+
     Endereco Test;
 
     cout << "Testando: defineLogradouro() --> " << Test.defineLogradouro("Rua da Esperanca") << endl;
@@ -73,11 +80,15 @@ bool executaEndereco()
 	ss2 << Test;
     cout << "Testando: ostream &operator<<(ostream& out,const Endereco &e) --> " << ss2.str() << endl;
 
+    cout << "executaEndereco() terminated." << endl << endl;
+
 return true;
 }
 
 bool executaEmpresa()
 {
+
+    cout << "Starting executaEmpresa()..." << endl;
 
     Empresa Test;
     Cnpj CnpjTest("44.786.289/0001-91");
@@ -111,24 +122,30 @@ bool executaEmpresa()
 	ss2 << Test;
     cout << "Testando: ostream &operator<<(ostream& out,const Empresa &e) --> " << ss2.str() << endl;
 
+    cout << "executaEmpresa() terminated." << endl << endl;
+
+return true;
+}
+
+bool runProgram(string urlEmpresa)
+{
+
+    Program pInit;
+
+    pInit.loadFile_Empresa(urlEmpresa);
+    cout << pInit.obtemEmpresa() << endl;
+
 return true;
 }
 
 bool start()
 {
     cout << "Started..." << endl;
-    
-    cout << "Starting executaCnpj()..." << endl;
-    executaCnpj();
-    cout << "executaCnpj() terminated." << endl << endl;
 
-    cout << "Starting executaEndereco()..." << endl;
-    executaEndereco();
-    cout << "executaEndereco() terminated." << endl << endl;
-
-    cout << "Starting executaEmpresa()..." << endl;
-    executaEmpresa();
-    cout << "executaEmpresa() terminated." << endl << endl;
+    //executaCnpj();
+    //executaEndereco();
+    //executaEmpresa();
+    runProgram("data/empresa.csv");
 
 return true;
 }

@@ -149,6 +149,29 @@ string Endereco::str() const
 return ss.str();
 }
 
+bool Endereco::fromCSV(string csv, char separador)
+{
+    
+    if(csv != "")
+    {
+
+        string aux;
+        stringstream buffer(csv);
+
+        getline(buffer, this->logradouro, separador);
+        getline(buffer, this->numero, separador);
+        getline(buffer, this->complemento, separador);
+        getline(buffer, this->bairro, separador);
+        getline(buffer, this->cidade, separador);
+        getline(buffer, this->uf, separador);
+        getline(buffer, this->cep, separador);
+
+    return true;
+    }
+
+return false;
+}
+
 bool Endereco::operator==(const Endereco &endereco) const
 {
     
