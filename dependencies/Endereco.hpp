@@ -44,6 +44,7 @@ class Endereco
     bool operator==(const Endereco &endereco) const;
     friend istream &operator>>(istream& in,Endereco &endereco);
     friend ostream &operator<<(ostream& out,const Endereco &endereco);
+    
 };
 
 #endif

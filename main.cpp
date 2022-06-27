@@ -2,6 +2,8 @@
 #include "dependencies/Cnpj.hpp"
 #include "dependencies/Endereco.hpp"
 #include "dependencies/Empresa.hpp"
+#include "dependencies/Produto.hpp"
+#include "dependencies/Produtos.hpp"
 #include "dependencies/Program.hpp"
 
 using namespace std;
@@ -127,13 +129,12 @@ bool executaEmpresa()
 return true;
 }
 
-bool runProgram(string urlEmpresa)
+bool runProgram(string urlEmpresa, string urlProdutos)
 {
 
     Program pInit;
-
-    pInit.loadFile_Empresa(urlEmpresa);
-    cout << pInit.obtemEmpresa() << endl;
+    pInit.menu_Carregamento();
+    pInit.menu_Interface();
 
 return true;
 }
@@ -145,7 +146,8 @@ bool start()
     //executaCnpj();
     //executaEndereco();
     //executaEmpresa();
-    runProgram("data/empresa.csv");
+
+    runProgram("data/empresa.csv", "data/produtos.csv");
 
 return true;
 }

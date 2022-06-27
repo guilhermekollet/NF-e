@@ -38,6 +38,7 @@ class Empresa
     bool operator==(const Empresa &empresa) const;
     friend istream &operator>>(istream& in,Empresa &empresa);
     friend ostream &operator<<(ostream& out,const Empresa &empresa);
+    
 };
 
 #endif
