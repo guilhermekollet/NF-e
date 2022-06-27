@@ -133,7 +133,7 @@ bool runProgram(string urlEmpresa, string urlProdutos)
 {
 
     Program pInit;
-    pInit.menu_Carregamento();
+    pInit.menu_Carregamento(urlEmpresa, urlProdutos);
     pInit.menu_Interface();
 
 return true;

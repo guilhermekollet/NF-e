@@ -10,7 +10,7 @@ Program::~Program()
 
 }
 
-void Program::menu_Carregamento()
+void Program::menu_Carregamento(string urlEmpresa, string urlProdutos)
 {
     bool loop;
     
@@ -18,11 +18,12 @@ void Program::menu_Carregamento()
     {
         
         int value;
-        string urlEmpresa;
-        string urlProdutos;
+        string urEm;
+        string urPr;
 
-        cout << "1) Carregar dados" << endl;
-        cout << "2) Sair" << endl;
+        cout << "1) Carregar dados salvos" << endl;
+        cout << "2) Carregar novos dados" << endl;
+        cout << "3) Sair" << endl;
 
         cout << endl;
 
@@ -34,19 +35,29 @@ void Program::menu_Carregamento()
 
             case 1:
                 system("clear||cls");
+                loadFile_Empresa(urlEmpresa);
+                loadFile_Produtos(urlProdutos);
+                cout << empresa.obtemNome() << " Logado | " << produtos.obtemNumProdutos() << " produtos cadastrados."<< endl << endl;
+
+            loop = false;
+            break;
+
+            case 2:
+                system("clear||cls");
+
                 cout << "Insira o nome do arquivo referente a Empresa:" << endl;
                 cout << "> ";
-                cin >> urlEmpresa;
+                cin >> urEm;
 
-                if(loadFile_Empresa(urlEmpresa))
+                if(loadFile_Empresa(urEm))
                 {
                     cout << endl << "Carregamento realizado! " << empresa.obtemNome() << " definida." << endl << endl;
 
                     cout << endl << "Insira o nome do arquivo referente aos Produtos:" << endl;
                     cout << "> ";
-                    cin >> urlProdutos;
+                    cin >> urPr;
 
-                    if(loadFile_Produtos(urlProdutos))
+                    if(loadFile_Produtos(urPr))
                     {
 
                         cout << endl << "Carregamento realizado! " << produtos.obtemNumProdutos() << " produtos localizados." << endl << endl << endl;
@@ -72,7 +83,7 @@ void Program::menu_Carregamento()
 
             break;
 
-            case 2:
+            case 3:
                 system("clear||cls");
                 exit(1);
 

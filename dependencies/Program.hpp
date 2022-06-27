@@ -17,7 +17,7 @@ class Program
     public:
     Program();
     ~Program();
-    void menu_Carregamento();
+    void menu_Carregamento(string urlEmpresa, string urlProdutos);
     void menu_Interface();
     bool loadFile_Empresa(string urlEmpresa);
     bool loadFile_Produtos(string urlProdutos);
