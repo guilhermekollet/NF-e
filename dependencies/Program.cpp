@@ -466,7 +466,9 @@ string Program::obtemCumpomFiscal()
     ssFooter << setw(larguraTable) << setfill('-') << "" << endl;
 
     ssFooter << setiosflags(ios::left) << setw(22) << setfill(' ') << nfe.str();
-    ssFooter << setiosflags(ios::left) << setw(78) << setfill(' ') << data;
+    ssFooter << setiosflags(ios::left) << setw(78) << setfill(' ') << data << endl;
+    
+    ssFooter << setw(larguraTable) << setfill('-') << "" << endl;
 
     stringstream ssAll;
     ssAll << ssHeader.str() << endl << ssContent.str() << endl << ssFooter.str() << endl;
