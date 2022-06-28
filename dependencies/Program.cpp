@@ -21,6 +21,8 @@ void Program::menu_Carregamento(string urlEmpresa, string urlProdutos)
         string urEm;
         string urPr;
 
+        cout << endl;
+
         cout << "1) Carregar dados salvos" << endl;
         cout << "2) Carregar novos dados" << endl;
         cout << "3) Sair" << endl;
@@ -35,11 +37,10 @@ void Program::menu_Carregamento(string urlEmpresa, string urlProdutos)
 
             case 1:
                 system("clear||cls");
-                loadFile_Empresa(urlEmpresa);
-                loadFile_Produtos(urlProdutos);
+                if(loadFile_Empresa(urlEmpresa) && loadFile_Produtos(urlProdutos)) loop = false;
+
                 cout << empresa.obtemNome() << " - Logado | " << produtos.obtemNumProdutos() << " produtos cadastrados."<< endl << endl;
 
-            loop = false;
             break;
 
             case 2:
@@ -108,6 +109,7 @@ void Program::menu_Interface()
     {
 
         int value;
+        int status = 0;
 
         cout << "1) Gerar Relatorio" << endl;
         cout << "2) Iniciar Venda" << endl;
@@ -128,8 +130,31 @@ void Program::menu_Interface()
             break;
             
             case 2:
-                cout << obtemCumpomFiscal() << endl;
-                exit(1);
+                system("clear||cls");
+
+                cout << "Conectando ao sistema de Emissao de Cupom Fiscal" << endl << endl;
+                
+                if(loadFile_Nfe("data/nf-e.csv"))
+                {
+
+                    cout << "[1/3] NF-E CONECTADO!" << endl << endl;
+                    status += 1;
+
+                }
+
+                if(loadFile_Descontos("data/descontos.csv"))
+                {
+
+                    cout << "[2/3] TABELA DE DESCONTOS CONECTADA!" << endl << endl;
+                    status += 1;
+
+                }
+
+                    cout << "[!!!/3] TABELA DE COMPRAS NAO CARREGADA!" << endl << "[ATENCAO] EXIBICAO DE MODULO PERMITIDO..." << endl << endl;
+                    status += 1;
+
+                if(status == 3) cout << obtemCumpomFiscal() << endl;
+                else cout << "Nao foi possivel gerar o cupom fiscal." << endl;
             
             break;
 
@@ -203,6 +228,107 @@ bool Program::loadFile_Produtos(string urlProdutos)
 return false;
 }
 
+bool Program::loadFile_Nfe(string urlNfe)
+{
+
+    if(urlNfe != "")
+    {
+        ifstream read(urlNfe);
+        string auxStream;
+        stringstream stream;
+
+        do
+        {
+            getline(read, auxStream, '\r');
+            stream << auxStream;
+
+        } while (read.good());
+
+        if(nfe.fromCSV(stream.str())) nfe.setDatabase(urlNfe);
+
+        read.close();
+
+        if(nfe.obtemNumero() > 0) return true;
+    }
+
+return false;
+}
+
+bool Program::loadFile_Descontos(string urlDescontos)
+{
+
+    if(urlDescontos != "")
+    {
+        ifstream read(urlDescontos);
+        string auxStream;
+        stringstream stream;
+        string codigoBarrasA;
+        string valorDescontoA;
+        string quantidadeItensA;
+        string itensPagosA;
+        string quantidadeItensB;
+        string codigoBarrasB;
+        string valorDescontoB;
+
+        do
+        {
+            getline(read, codigoBarrasA, ';');
+            getline(read, valorDescontoA, ';');
+
+            if(valorDescontoA != "")
+            {
+
+                Desconto *d = new Desconto(codigoBarrasA,valorDescontoA);
+                descontos.adiciona(*d);
+
+                cout << endl << codigoBarrasA << " - Possui direito a Desconto Simples!" << endl;
+                
+            }
+
+            getline(read, quantidadeItensA, ';');
+            getline(read, itensPagosA, ';');
+            quantidadeItensB = itensPagosA;
+            getline(read, codigoBarrasB, ';');
+
+            if(codigoBarrasB != "")
+            {
+
+                Desconto *d = new Desconto(codigoBarrasA,valorDescontoA);
+                descontos.adiciona(*d);
+
+                cout << endl << codigoBarrasA << " - Possui direito a Desconto Combinado se levar " << codigoBarrasB << endl;
+                
+            }
+
+            getline(read, valorDescontoB, '\n');
+
+            cout << "CodigoBarrasA:  " << codigoBarrasA << "  ";
+            
+            cout << "valorDescontoA:  " << valorDescontoA << "  ";
+
+            cout << "quantidadeItensA:  " << quantidadeItensA << "  ";
+            
+            cout << "itensPagosA:  " << itensPagosA << "  ";
+            
+            cout << "quantidadeItensB:  " << quantidadeItensB << "  ";
+            
+            cout << "codigoBarrasB:  " << codigoBarrasB << "  ";
+            
+            cout << "valorDescontoB:  " << valorDescontoB << "  " << endl;
+
+        } while (read.good());   
+    
+        cout << endl << "Descontos adicionados: " << endl << descontos.str() << endl;
+        
+        read.close();
+
+    return true;
+    }
+
+return false;
+}
+
+
 string Program::obtemEmpresa()
 {
 
@@ -247,34 +373,103 @@ string Program::obtemRelatorio()
 return ss.str();
 }
 
-string Program::obtemCumpomFiscal()
+string toolTable_Center(int largura,string text)
 {
 
-    stringstream ss;
-    ss << setiosflags(ios::left) << setw (3) << setfill(' ') << "I.";
-    ss << "  ";
+    int diferenca = largura - text.length();
+    int position = diferenca / 2;
 
-    ss << setiosflags(ios::left) << setw (14) << setfill(' ') << "CODIGO";
-    ss << "  ";
+    string newText = "";
 
-    ss << setiosflags(ios::left) << setw (42) << setfill (' ') << "DESCRICAO";
-    ss << "  ";
+    for(int i=0; i < position; i++)
+    {
 
-    ss << setiosflags(ios::right) << setw (6) << setfill (' ') << "R$ UN";
-    ss << "  ";
+            newText += " ";
 
-    ss << setiosflags(ios::right) << setw (6) << setfill (' ') << "QTD";
-    ss << "  ";
+    }
 
-    ss << setiosflags(ios::right) << setw(8) << setfill(' ') << "DESCONTO";
-    ss << "  ";
+    newText += text;
 
-    ss << setiosflags(ios::left) << setw(7) << setfill(' ') << "VAL(R$)";
-    ss << "  ";
+    for(int i=0; i < position; i++)
+    {
+
+            newText += " ";
+
+    }
+
+return newText;
+}
+
+string Program::obtemCumpomFiscal()
+{
+    //Variables List
+    int larguraTable = 100; //Tamanho da Tabela
+
+    //_Header
+    string ssHeader_Empresa = empresa.obtemNome() + " - Telefone: " + empresa.obtemTelefone();
+    string ssHeader_Endereco = empresa.obtemEndereco().obtemLogradouro() + ", " + empresa.obtemEndereco().obtemNumero() + " - " + empresa.obtemEndereco().obtemBairro() + " - " + empresa.obtemEndereco().obtemCidade() + "-" + empresa.obtemEndereco().obtemUF() + " CEP " + empresa.obtemEndereco().obtemCEP();
+    string ssHeader_Institucional = "CNPJ: " + empresa.obtemCNPJ().str() + " - IE: " + empresa.obtemInscEst();
+    string ssHeader_Tittle = "DOCUMENTO AUXILIAR DA NOTA FISCAL DE CONSUMIDOR ELETRONICA";
+
+    //_Footer
+    nfe.EmiteNFC_str();
+    string data = nfe.obtemLastTimeEmitted();
+
+    //Table Header
+    stringstream ssHeader;
+    ssHeader << setw(larguraTable) << setfill('-') << "" << endl;
+
+    ssHeader << setw(larguraTable) << setfill(' ') << toolTable_Center(larguraTable, ssHeader_Empresa) << endl;
+    ssHeader << setw(larguraTable) << setfill(' ') << toolTable_Center(larguraTable, ssHeader_Endereco) << endl;
+    ssHeader << setw(larguraTable) << setfill(' ') << toolTable_Center(larguraTable, ssHeader_Institucional) << endl;
+    
+    ssHeader << setw(larguraTable) << setfill('-') << "" << endl;
+
+    ssHeader << setw(larguraTable) << setfill(' ') << toolTable_Center(larguraTable, ssHeader_Tittle) << endl;
+
+    ssHeader << setw(larguraTable) << setfill('-') << "";
+
+
+    //Table Tittle
+    stringstream ssContent;
+    ssContent << setiosflags(ios::left) << setw (2) << setfill(' ') << "I.";
+    ssContent << "  ";
+
+    ssContent << setiosflags(ios::left) << setw (13) << setfill(' ') << "CODIGO";
+    ssContent << "  ";
+
+    ssContent << setiosflags(ios::left) << setw (50) << setfill (' ') << "DESCRICAO";
+    ssContent << "  ";
+
+    ssContent << setiosflags(ios::right) << setw (5) << setfill (' ') << "R$ UN";
+    ssContent << "  ";
+
+    ssContent << setiosflags(ios::right) << setw (3) << setfill (' ') << "QTD";
+    ssContent << "  ";
+
+    ssContent << setiosflags(ios::right) << setw(8) << setfill(' ') << "DESCONTO";
+    ssContent << "  ";
+
+    ssContent << setiosflags(ios::left) << setw(7) << setfill(' ') << "VAL(R$)";
+    ssContent << "  ";
         
-    ss << endl << setw(111) << setfill('=') << "";
+    ssContent << endl << setw(larguraTable) << setfill('-') << "";
 
     //ss << endl << produtos.str();
 
-return ss.str();
+    stringstream ssFooter;
+    ssFooter << setw(larguraTable) << setfill('-') << "" << endl;
+
+    ssFooter << setiosflags(ios::right) << setw(86) << setfill(' ') << "TOTAL";
+    ssFooter << setiosflags(ios::right) << setw(14) << setfill(' ') << "000,00" << endl;
+
+    ssFooter << setw(larguraTable) << setfill('-') << "" << endl;
+
+    ssFooter << setiosflags(ios::left) << setw(22) << setfill(' ') << nfe.str();
+    ssFooter << setiosflags(ios::left) << setw(78) << setfill(' ') << data;
+
+    stringstream ssAll;
+    ssAll << ssHeader.str() << endl << ssContent.str() << endl << ssFooter.str() << endl;
+
+return ssAll.str();
 }

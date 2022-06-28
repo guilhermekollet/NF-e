@@ -89,6 +89,7 @@ bool Empresa::defineEndereco(const Endereco &endereco)
 return false;
 }
 
+
 string Empresa::obtemTelefone() const
 {
 

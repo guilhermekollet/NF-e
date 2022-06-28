@@ -7,10 +7,14 @@ class DescontoSimples : public Desconto
 
     //Attributes
     private:
+    string codigoBarras;
+    string desconto;
+    string quantidade;
 
     //Methods
     public:
     DescontoSimples();
+    DescontoSimples(string cod, string quantidade);
     ~DescontoSimples();
 
 };
